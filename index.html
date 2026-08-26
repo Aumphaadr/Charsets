@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кодировки символов</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <button class="burger" type="button" aria-label="Меню">☰</button>
+    <h1 class="pagetitle">Кодировки символов</h1>
+  </header>
+
+  <div class="viewport">
+    <div class="home">
+
+      <!-- Преобразователь: слева входит осмысленное слово, справа выходит
+           то же самое, но прочитанное по другим правилам. -->
+      <section class="hero" aria-label="Как осмысленный текст превращается в кракозябры">
+        <div class="flow">
+          <div class="rails" aria-hidden="true"></div>
+          <div class="word in" aria-hidden="true">Привет</div>
+
+          <div class="machine">
+            <div class="blackbox" id="blackbox"></div>
+          </div>
+
+          <div class="word out" aria-hidden="true">РџСЂРёРІРµС‚</div>
+        </div>
+        <p class="visually-hidden">
+          Слово «Привет» записано в UTF-8, а прочитано как Windows-1251 —
+          и превратилось в «РџСЂРёРІРµС‚».
+        </p>
+      </section>
+
+      <section class="lead">
+        <h2>Знакомо?</h2>
+        <p>
+          Байты те же самые. Изменились только правила, по которым их читают.
+          Достаточно открыть файл «не тем» — и осмысленный текст рассыпается.
+        </p>
+        <p>
+          Кодировка — это договор о том, каким числом записывается каждый
+          символ. Договоров оказалось много: свой у DOS, свой у Windows, свой
+          у Unix, свой почти у каждого языка. Пока текст не покидал одну
+          систему, всё сходилось. Как только файлы пошли между машинами,
+          начались кракозябры.
+        </p>
+        <p class="accent">
+          Здесь этот механизм показан изнутри — не на пальцах, а побайтно.
+        </p>
+      </section>
+
+      <nav class="cards" aria-label="Разделы сайта">
+        <a class="card" href="explorer.html">
+          <h3>Обозреватель кодировок</h3>
+          <p>
+            Тридцать девять кодировок, любые рядом друг с другом. Видно, что
+            означает один и тот же байт в каждой из них — и как из двух байтов
+            подряд рождается та самая абракадабра.
+          </p>
+          <span class="go">Открыть таблицы →</span>
+        </a>
+
+        <a class="card" href="convert.html">
+          <h3>Перекодировщик</h3>
+          <p>
+            Впишите свой текст, прогоните через любую пару кодировок и
+            посмотрите на результат. Панель байтов редактируемая: можно вбить
+            числа руками и получить из них текст.
+          </p>
+          <span class="go">Попробовать →</span>
+        </a>
+      </nav>
+
+    </div>
+  </div>
+
+</div>
+
+<nav class="sidebar" data-open="0"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/home.js"></script>
+</body>
+</html>
