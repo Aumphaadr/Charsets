@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Перекодировщик</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <button class="burger" type="button" aria-label="Меню">☰</button>
+    <h1 class="pagetitle">Перекодировщик</h1>
+
+    <span class="spacer"></span>
+
+    <div class="presets">
+      <span class="lbl">Классические пары:</span>
+      <button type="button" data-preset="utf-8|windows-1251">UTF-8 → Windows-1251</button>
+      <button type="button" data-preset="windows-1251|windows-1252">1251 → 1252</button>
+      <button type="button" data-preset="cp866|windows-1251">CP866 → 1251</button>
+      <button type="button" data-preset="koi8-r|windows-1251">KOI8-R → 1251</button>
+    </div>
+  </header>
+
+  <div class="viewport">
+    <div class="pipe">
+
+      <section class="stage">
+        <h2>Исходный текст</h2>
+        <textarea id="src" spellcheck="false" rows="4">Привет, мир!</textarea>
+        <p class="meta" id="src-meta"></p>
+      </section>
+
+      <div class="arrow">
+        <span class="cap">записать как</span>
+        <select id="enc" aria-label="Кодировка записи"></select>
+      </div>
+
+      <section class="stage">
+        <h2>Байты</h2>
+        <div class="stagebar">
+          <div class="radix" role="group" aria-label="Система счисления">
+            <button type="button" data-radix="dec">DEC</button>
+            <button type="button" data-radix="hex" aria-pressed="true">HEX</button>
+            <button type="button" data-radix="bin">BIN</button>
+          </div>
+
+          <!-- Развороты живут здесь, в середине конвейера: это действие
+               над направлением потока, а не над кодировкой чтения. -->
+          <div class="turns">
+            <button type="button" id="flip"
+              title="Записать и прочитать меняются местами, текст остаётся прежним. Обычно выходит набор недопустимых последовательностей — но иногда именно это и нужно проверить.">
+              ⇅ Поменять кодировки</button>
+            <button type="button" id="undo"
+              title="Результат становится исходным текстом, а кодировки меняются местами. Так испорченный текст восстанавливается: кракозябры превращаются обратно в оригинал.">
+              ↺ Прогнать обратно</button>
+          </div>
+
+          <span class="meta" id="bytes-meta"></span>
+        </div>
+        <textarea id="bytes" spellcheck="false" rows="4"></textarea>
+        <p class="meta b64">Те же байты в Base64: <code id="b64"></code></p>
+      </section>
+
+      <div class="arrow">
+        <span class="cap">прочитать как</span>
+        <select id="dec" aria-label="Кодировка чтения"></select>
+      </div>
+
+      <section class="stage">
+        <h2>Результат</h2>
+        <div class="result" id="out"></div>
+        <p class="meta" id="out-meta"></p>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+
+<nav class="sidebar" data-open="0"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/convert.js"></script>
+</body>
+</html>

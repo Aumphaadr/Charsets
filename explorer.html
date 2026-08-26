@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Обозреватель кодировок</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <button class="burger" type="button" aria-label="Меню">☰</button>
+
+    <div class="picker">
+      <button type="button" aria-haspopup="listbox">Кодировки</button>
+      <div class="panel" role="listbox" aria-multiselectable="true" hidden></div>
+    </div>
+
+    <div class="modes seg" role="group" aria-label="Режим сравнения">
+      <button type="button" data-mode="code" title="Один код — разные символы">по коду</button>
+      <button type="button" data-mode="char" title="Один символ — разные коды">по символу</button>
+    </div>
+
+    <div class="joinbox">
+      <span class="cap">Код</span>
+      <div class="joinsw seg" role="group" aria-label="Запись кода">
+        <button type="button" data-join="0"
+          title="Каждый байт отдельным числом: 1 0. Видно, что байтов два.">раздельно</button>
+        <button type="button" data-join="1"
+          title="Последовательность байтов одним числом: 256. Видно значение.">слитно</button>
+      </div>
+    </div>
+
+    <span class="spacer"></span>
+
+    <label class="dimbox">
+      <input type="checkbox" id="dim"> приглушить совпадающие
+    </label>
+
+    <div class="fontsize" role="group" aria-label="Размер шрифта таблицы">
+      <button type="button" id="fs-dec" aria-label="Уменьшить">−</button>
+      <span id="fs-value">22</span>
+      <button type="button" id="fs-inc" aria-label="Увеличить">+</button>
+    </div>
+
+    <div class="cols">
+      <label title="Символьное представление"><input type="checkbox" value="char" checked disabled><span>CHAR</span></label>
+      <label title="Десятичное представление"><input type="checkbox" value="dec" checked><span>DEC</span></label>
+      <label title="Шестнадцатеричное представление"><input type="checkbox" value="hex"><span>HEX</span></label>
+      <label title="Двоичное представление"><input type="checkbox" value="bin"><span>BIN</span></label>
+    </div>
+  </header>
+
+  <!-- Полоса хода отрисовки. Живёт под шапкой, а не внизу ленты:
+       внизу она оказывается за экраном ровно тогда, когда нужна. -->
+  <div class="toploader"><div class="bar"></div></div>
+
+  <div class="viewport" data-cols="dec">
+    <div class="axisnote"></div>
+    <div class="headwrap"></div>
+    <div class="ribbon"></div>
+    <div class="more"></div>
+  </div>
+
+</div>
+
+<nav class="sidebar" data-open="0"></nav>
+<div class="scrim" hidden></div>
+
+<script type="module" src="js/explorer.js"></script>
+</body>
+</html>
