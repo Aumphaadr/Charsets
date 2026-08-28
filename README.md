@@ -73,6 +73,7 @@ npx sirv-cli . --dev
 ## Устройство
 
 ```
+favicon.svg        значок «U+», буквы в кривых
 index.html         главная
 explorer.html      обозреватель
 convert.html       перекодировщик
