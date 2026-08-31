@@ -251,9 +251,15 @@ input[type=checkbox] { accent-color: var(--c-accent); }
 }
 .presets button:hover { border-color: var(--c-accent-dim); color: var(--c-accent); }
 
-.pipe { max-width: 860px; margin: 0 auto; padding: 22px 18px 60px; }
+/* Ширина задаётся переменной, а не max-width: за неё тянут кромки секций.
+   Контейнер центрирован, поэтому обе кромки расходятся поровну сами. */
+.pipe {
+  width: var(--pipe-w, 860px); max-width: 100%;
+  margin: 0 auto; padding: 22px 18px 60px;
+}
 
 .stage {
+  position: relative;                 /* держит ручки на кромках */
   padding: 14px 16px 16px;
   background: var(--c-surface);
   border: 1px solid var(--c-border); border-radius: var(--radius-md);
@@ -479,6 +485,30 @@ body[data-busy="1"] .toploader { opacity: 1; background: var(--c-accent-subtle);
 body[data-busy="1"] { cursor: progress; }
 .picker > button:disabled { opacity: .45; cursor: progress; }
 
+
+/* ---- ручки ширины ---- */
+
+.grip {
+  position: absolute; top: 0; bottom: 0; width: 12px;
+  cursor: ew-resize;
+  touch-action: none;                 /* иначе тяга по касанию прокрутит страницу */
+}
+.grip.left  { left: -6px; }
+.grip.right { right: -6px; }
+.grip:focus { outline: none; }
+
+.grip::before {
+  content: ''; position: absolute; top: 10px; bottom: 10px; left: 50%;
+  width: 2px; transform: translateX(-50%); border-radius: 1px;
+  background: var(--c-accent-dim);
+  opacity: 0; transition: opacity .12s;
+}
+.grip:hover::before, .grip:focus-visible::before { opacity: 1; }
+
+/* Во время тяги подсвечиваются все кромки разом: так видно, что секции
+   связаны и меняются вместе, а не только та, за которую схватили. */
+body[data-resizing] .grip::before { opacity: .55; }
+body[data-resizing] { cursor: ew-resize; user-select: none; }
 
 /* ============ Главная ============ */
 

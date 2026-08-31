@@ -10,6 +10,7 @@ import { CHARSETS, GROUPS, byId } from './charsets.js';
 import { partsHtml, esc } from './parts.js';
 import { initTips } from './ui.js';
 import { initNav } from './nav.js';
+import { initPipeResize } from './resize.js';
 
 const el = id => document.getElementById(id);
 const src = el('src'), bytesBox = el('bytes'), out = el('out');
@@ -175,4 +176,5 @@ fillSelect(decSel, 'windows-1251');
 document.querySelectorAll('.radix button').forEach(b =>
   b.setAttribute('aria-pressed', String(b.dataset.radix === radix)));
 initTips(document.querySelector('.viewport'));
+initPipeResize(document.querySelector('.pipe'));
 runAll();
