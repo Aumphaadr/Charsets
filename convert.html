@@ -31,8 +31,8 @@
     <div class="pipe">
 
       <section class="stage">
-        <h2>Исходный текст</h2>
-        <div class="stagebar right">
+        <div class="stagebar">
+          <h2>Исходный текст</h2>
           <div class="turns">
             <button type="button" id="clear"
               title="Очистить поле. Действие отменяется как обычная правка — Ctrl+Z вернёт текст.">
@@ -49,12 +49,14 @@
       </div>
 
       <section class="stage">
-        <h2>Байты</h2>
         <div class="stagebar">
-          <div class="radix" role="group" aria-label="Система счисления">
-            <button type="button" data-radix="dec">DEC</button>
-            <button type="button" data-radix="hex" aria-pressed="true">HEX</button>
-            <button type="button" data-radix="bin">BIN</button>
+          <div class="barleft">
+            <h2>Байты</h2>
+            <div class="radix" role="group" aria-label="Система счисления">
+              <button type="button" data-radix="dec">DEC</button>
+              <button type="button" data-radix="hex" aria-pressed="true">HEX</button>
+              <button type="button" data-radix="bin">BIN</button>
+            </div>
           </div>
 
           <!-- Развороты живут здесь, в середине конвейера: это действие
@@ -80,7 +82,7 @@
       </div>
 
       <section class="stage">
-        <h2>Результат</h2>
+        <div class="stagebar"><h2>Результат</h2></div>
         <div class="result" id="out"></div>
         <p class="meta" id="out-meta"></p>
       </section>
