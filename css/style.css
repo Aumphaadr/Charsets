@@ -264,10 +264,14 @@ input[type=checkbox] { accent-color: var(--c-accent); }
   background: var(--c-surface);
   border: 1px solid var(--c-border); border-radius: var(--radius-md);
 }
+/* Заголовок живёт в той же строке, что и контролы секции: отдельной
+   строкой он занимал высоту, ничего к ней не добавляя. */
 .stage h2 {
-  margin: 0 0 10px; font-size: var(--fs-ui); font-weight: 600;
-  letter-spacing: .08em; text-transform: uppercase; color: var(--c-text-dim);
+  margin: 0; font-size: var(--fs-ui); font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--c-text-dim);
+  white-space: nowrap;
 }
+.barleft { display: flex; align-items: center; gap: 14px; }
 .stage textarea {
   display: block; width: 100%; resize: vertical;
   padding: 10px 12px;
@@ -278,7 +282,6 @@ input[type=checkbox] { accent-color: var(--c-accent); }
 .stage #bytes { font-family: var(--font-num); font-size: 14px; letter-spacing: .02em; }
 .stage textarea:focus { outline: none; border-color: var(--c-accent-dim); }
 
-.stagebar.right { justify-content: flex-end; }
 .stagebar { display: flex; align-items: center; justify-content: space-between;
             gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
 .radix { display: flex; border: 1px solid var(--c-border); border-radius: var(--radius-sm); overflow: hidden; }
