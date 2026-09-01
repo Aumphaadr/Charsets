@@ -60,8 +60,12 @@
   <div class="toploader"><div class="bar"></div></div>
 
   <div class="viewport" data-cols="dec">
-    <div class="axisnote"></div>
-    <div class="headwrap"></div>
+    <!-- Пояснение к оси и шапка таблицы липнут к верху вместе: так их
+         взаимная высота не превращается в магическое число в CSS. -->
+    <div class="stickytop">
+      <div class="axisnote"></div>
+      <div class="headwrap"></div>
+    </div>
     <div class="ribbon"></div>
     <div class="more"></div>
   </div>
