@@ -278,6 +278,7 @@ input[type=checkbox] { accent-color: var(--c-accent); }
 .stage #bytes { font-family: var(--font-num); font-size: 14px; letter-spacing: .02em; }
 .stage textarea:focus { outline: none; border-color: var(--c-accent-dim); }
 
+.stagebar.right { justify-content: flex-end; }
 .stagebar { display: flex; align-items: center; justify-content: space-between;
             gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
 .radix { display: flex; border: 1px solid var(--c-border); border-radius: var(--radius-sm); overflow: hidden; }
@@ -313,7 +314,8 @@ input[type=checkbox] { accent-color: var(--c-accent); }
   border: 1px solid var(--c-border); border-radius: var(--radius-sm);
   white-space: nowrap;
 }
-.turns button:hover { color: var(--c-accent); border-color: var(--c-accent-dim); }
+.turns button:hover:not(:disabled) { color: var(--c-accent); border-color: var(--c-accent-dim); }
+.turns button:disabled { opacity: .4; cursor: default; }
 .turns #undo { color: var(--c-text); border-color: var(--c-border-strong); }
 .turns #undo:hover { color: var(--c-accent); border-color: var(--c-accent-dim); }
 
