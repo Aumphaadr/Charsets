@@ -69,6 +69,25 @@ const toBase64 = bs => bs.length
   ? btoa(String.fromCharCode(...bs))       // btoa работает с latin1, а у нас
   : '';                                    // ровно байты 0..255 — то, что нужно
 
+/* ---------- запись в поле исходного текста ---------- */
+
+// Присваивание value стирает нативную историю отмены: нажал «Очистить»
+// не глядя — и Ctrl+Z уже ничего не вернёт. Правка через execCommand
+// ложится в ту же историю, что и набор с клавиатуры, поэтому отменяется
+// штатно. Метод объявлен устаревшим, замены ему нет, поэтому есть запасной
+// путь на случай, если он однажды перестанет работать.
+function setSrc(text) {
+  src.focus();
+  src.select();
+  const ok = text
+    ? document.execCommand('insertText', false, text)
+    : document.execCommand('delete');
+  if (!ok) src.value = text;
+  syncClear();
+}
+
+function syncClear() { el('clear').disabled = src.value === ''; }
+
 /* ---------- шаги конвейера ---------- */
 
 function encodeStep() {
@@ -76,7 +95,11 @@ function encodeStep() {
   const { bytes, lost } = cs.encodeText(src.value);
 
   const chars = [...src.value].length;
-  el('src-meta').innerHTML = lost.length
+  // На пустом поле «0 символов, все представимы» формально верно, но читается
+  // глупо: утверждать что-то обо всех символах, когда их нет, незачем.
+  el('src-meta').innerHTML = !chars
+    ? 'Поле пустое — впишите текст или вставьте байты ниже.'
+    : lost.length
     ? `${chars} символов. <span class="warn">Не представимы в ${esc(cs.title)}: `
       + `${esc([...new Set(lost)].join(' '))} — ${lost.length} шт., они просто пропали.</span>`
     : `${chars} символов, все представимы в ${esc(cs.title)}.`;
@@ -126,7 +149,10 @@ function runFromBytes() {
 
 /* ---------- события ---------- */
 
-src.addEventListener('input', runAll);
+src.addEventListener('input', () => { syncClear(); runAll(); });
+
+// Очистка снимает и ручную правку байтов: поле снова ведёт конвейер.
+el('clear').addEventListener('click', () => { setSrc(''); runAll(); });
 encSel.addEventListener('change', runAll);
 decSel.addEventListener('change', () => manual ? runFromBytes() : runAll());
 
@@ -155,7 +181,7 @@ el('flip').addEventListener('click', () => {
 // Это и есть «мне прислали кракозябры, верните текст».
 el('undo').addEventListener('click', () => {
   const { bytes } = manual ? parseBytes(bytesBox.value) : { bytes: byId(encSel.value).encodeText(src.value).bytes };
-  src.value = byId(decSel.value).decodeText(bytes);
+  setSrc(byId(decSel.value).decodeText(bytes));
   [encSel.value, decSel.value] = [decSel.value, encSel.value];
   runAll();
 });
@@ -175,6 +201,7 @@ fillSelect(encSel, 'utf-8');
 fillSelect(decSel, 'windows-1251');
 document.querySelectorAll('.radix button').forEach(b =>
   b.setAttribute('aria-pressed', String(b.dataset.radix === radix)));
+syncClear();
 initTips(document.querySelector('.viewport'));
 initPipeResize(document.querySelector('.pipe'));
 runAll();
