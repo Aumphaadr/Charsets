@@ -1,30 +1,81 @@
 @import url('tokens.css');
 
 /* ============ Шрифты ============ */
-/* Подмножества под ровно тот набор символов, что встречается в кодовых
-   страницах: 726 знаков, 23 КБ на оба файла. Своя гарнитура здесь не
-   украшение — на системном шрифте часть представимых символов
-   превращается в квадраты, и студент не отличит «глифа нет» от
-   «символа нет в кодировке». Подробности в fonts/README.md.
+/* Подмножества под ровно тот набор знаков, что рисуют кодовые страницы:
+   724 знака в трёх файлах. Своя гарнитура здесь не украшение — на системном
+   шрифте часть представимых символов превращается в квадраты, и студент
+   не отличит «глифа нет» от «символа нет в кодировке». Откуда файлы, под
+   какими лицензиями и как пересобрать — в fonts/README.md.
 
-   Диапазоны не пересекаются: выбор глифа детерминирован и не зависит
-   от порядка правил. */
+   Диапазоны не пересекаются, поэтому выбор файла для знака детерминирован
+   и не зависит от порядка правил. Их же читает tools/check.mjs, когда
+   сверяет покрытие, — править диапазоны можно только здесь. */
 
+/* Основной: латиница, кириллица, греческий, рамки и всё прочее. */
 @font-face {
   font-family: 'Charsets Mono';
-  src: url('../fonts/CharsetsMono.woff2') format('woff2');
+  src: url('../fonts/DejaVuSansMono-Charsets.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0020-058F, U+0600-0687, U+0689-06B9, U+06BB-06C0,
-                 U+06C2-06D1, U+06D3-2043, U+2045-FFFF;
+  unicode-range: U+0020-058F, U+0700-2043, U+2045-FFFF;
 }
 
-/* В DejaVu Sans Mono нет ни одной буквы иврита — вся Windows-1255
-   рассыпалась бы в квадраты. Эти диапазоны закрывает FreeMono. */
+/* Иврита в DejaVu Sans Mono нет вовсе — он и дробная косая U+2044 берутся
+   из DejaVu Sans того же семейства и под той же лицензией. */
 @font-face {
   font-family: 'Charsets Mono';
-  src: url('../fonts/CharsetsMono-Semitic.woff2') format('woff2');
+  src: url('../fonts/DejaVuSans-Charsets.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0590-05FF, U+0688, U+06BA, U+06C1, U+06D2, U+2044;
+  unicode-range: U+0590-05FF, U+2044;
+}
+
+/* Арабица целиком из одного шрифта: четырёх букв урду нет в DejaVu, а буквы
+   из двух разных гарнитур в одной таблице были бы разного рисунка.
+   Выносные элементы у Noto почти вдвое выше, чем у DejaVu, но высоту строки
+   браузеры считают по основному шрифту элемента: строки с арабицей той же
+   высоты, что остальные, — замерено в Chrome и Firefox. */
+@font-face {
+  font-family: 'Charsets Mono';
+  src: url('../fonts/NotoSansArabic-Charsets.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+0600-06FF;
+}
+
+/* ============ Значки ============ */
+/* Файлы — копии набора Klaarheid Icons в icons/ (npm run icons:sync);
+   на репозиторий набора сайт не ссылается. Подключены маской, как советует
+   сам набор: цвет берётся из currentColor, поэтому значок перекрашивается
+   вместе с текстом кнопки — при наведении, в выбранном и в выключенном
+   состоянии. Размер — от кегля окружения; где нужен другой, задан на месте.
+
+   События мыши значку не нужны: иначе щелчок по нему попадает в сам значок,
+   и обработчики, которые смотрят на e.target, кнопку не узнают. */
+.icon {
+  display: inline-block; flex: none;
+  width: 1em; height: 1em;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  -webkit-mask-position: center;  mask-position: center;
+  -webkit-mask-size: contain;     mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  pointer-events: none;
+}
+.i-menu          { -webkit-mask-image: url(../icons/menu.svg);          mask-image: url(../icons/menu.svg); }
+.i-x             { -webkit-mask-image: url(../icons/x.svg);             mask-image: url(../icons/x.svg); }
+.i-arrow-up-down { -webkit-mask-image: url(../icons/arrow-up-down.svg); mask-image: url(../icons/arrow-up-down.svg); }
+.i-rotate-ccw    { -webkit-mask-image: url(../icons/rotate-ccw.svg);    mask-image: url(../icons/rotate-ccw.svg); }
+.i-circle-info   { -webkit-mask-image: url(../icons/circle-info.svg);   mask-image: url(../icons/circle-info.svg); }
+.i-minus         { -webkit-mask-image: url(../icons/minus.svg);         mask-image: url(../icons/minus.svg); }
+.i-plus          { -webkit-mask-image: url(../icons/plus.svg);          mask-image: url(../icons/plus.svg); }
+.i-arrow-right   { -webkit-mask-image: url(../icons/arrow-right.svg);   mask-image: url(../icons/arrow-right.svg); }
+/* chevron-down и arrow-down стоят в псевдоэлементах — у .picker и .arrow. */
+
+/* В режиме высокой контрастности Windows браузер подменяет фон системным,
+   и значок-маска слился бы с ним. Отдаём фону цвет текста — его система
+   к этому моменту уже выставила сама. */
+@media (forced-colors: active) {
+  .icon, .picker > button::after, .arrow::before {
+    forced-color-adjust: none; background-color: currentColor;
+  }
 }
 
 
@@ -89,6 +140,7 @@ html, body {
   color: var(--c-text); cursor: pointer; font-size: 16px;
 }
 .burger:hover { background: var(--c-hover); border-color: var(--c-border-strong); }
+.burger .icon { width: 18px; height: 18px; }
 
 .topbar .spacer { flex: 1; }
 
@@ -116,9 +168,15 @@ html, body {
   background: var(--c-elevated); color: var(--c-text);
   border: 1px solid var(--c-border-strong); border-radius: var(--radius-sm);
   cursor: pointer; font: inherit;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .picker > button:hover { border-color: var(--c-accent-dim); }
-.picker > button::after { content: '▾'; float: right; color: var(--c-text-muted); }
+.picker > button::after {
+  content: ''; flex: none; width: 14px; height: 14px;
+  background-color: var(--c-text-muted);
+  -webkit-mask: url(../icons/chevron-down.svg) center / contain no-repeat;
+          mask: url(../icons/chevron-down.svg) center / contain no-repeat;
+}
 
 .panel {
   position: absolute; z-index: 40; top: calc(100% + 6px); left: 0;
@@ -151,7 +209,7 @@ html, body {
   padding: 5px 8px; border-radius: var(--radius-sm); cursor: pointer;
 }
 .panel label:hover { background: var(--c-hover); }
-.panel .note { color: var(--c-text-dim); font-size: var(--fs-ui); }
+.panel .note { display: inline-flex; color: var(--c-text-dim); font-size: var(--fs-ui); cursor: help; }
 .panel .foot {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 6px; padding: 8px 8px 4px;
@@ -189,10 +247,13 @@ input[type=checkbox] { accent-color: var(--c-accent); }
 }
 .fontsize button {
   width: 26px; height: 26px; padding: 0; cursor: pointer;
-  background: none; border: 0; color: var(--c-text-muted); font: inherit; font-size: 15px;
+  background: none; border: 0; color: var(--c-text-muted); font: inherit;
+  display: grid; place-items: center;
 }
+.fontsize .icon { width: 14px; height: 14px; }
 .fontsize button:hover { background: var(--c-hover); color: var(--c-accent); }
-.fontsize span {
+/* Только число кегля: значки − и + — тоже span, но внутри кнопок. */
+.fontsize > span {
   min-width: 30px; text-align: center; font-size: var(--fs-ui);
   color: var(--c-text-muted); font-family: var(--font-num);
   border-inline: 1px solid var(--c-border);
@@ -248,6 +309,7 @@ input[type=checkbox] { accent-color: var(--c-accent); }
   padding: 4px 10px; cursor: pointer; font: inherit; font-size: var(--fs-ui);
   background: none; color: var(--c-text-muted);
   border: 1px solid var(--c-border); border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: 6px;
 }
 .presets button:hover { border-color: var(--c-accent-dim); color: var(--c-accent); }
 
@@ -302,7 +364,12 @@ input[type=checkbox] { accent-color: var(--c-accent); }
   display: flex; align-items: center; justify-content: center; gap: 10px;
   padding: 14px 0;
 }
-.arrow::before { content: '↓'; color: var(--c-accent-dim); font-size: 18px; }
+.arrow::before {
+  content: ''; flex: none; width: 18px; height: 18px;
+  background-color: var(--c-accent-dim);
+  -webkit-mask: url(../icons/arrow-down.svg) center / contain no-repeat;
+          mask: url(../icons/arrow-down.svg) center / contain no-repeat;
+}
 .arrow .cap { color: var(--c-text-dim); font-size: var(--fs-ui); }
 .arrow select {
   padding: 5px 10px; cursor: pointer; font: inherit;
@@ -316,6 +383,7 @@ input[type=checkbox] { accent-color: var(--c-accent); }
   background: none; color: var(--c-text-muted);
   border: 1px solid var(--c-border); border-radius: var(--radius-sm);
   white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 7px;
 }
 .turns button:hover:not(:disabled) { color: var(--c-accent); border-color: var(--c-accent-dim); }
 .turns button:disabled { opacity: .4; cursor: default; }
@@ -631,7 +699,8 @@ body[data-resizing] { cursor: ew-resize; user-select: none; }
 .card:focus-visible { outline: 2px solid var(--c-accent-dim); outline-offset: 2px; }
 .card h3 { margin: 0 0 10px; font-size: 17px; }
 .card p { margin: 0 0 16px; color: var(--c-text-muted); font-size: 14px; line-height: 1.6; }
-.card .go { margin-top: auto; color: var(--c-accent); font-size: 14px; }
+.card .go { margin-top: auto; color: var(--c-accent); font-size: 14px;
+            display: flex; align-items: center; gap: 6px; }
 
 @media (max-width: 620px) {
   .flow { grid-template-columns: 1fr; justify-items: center; }

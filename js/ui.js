@@ -19,7 +19,8 @@ export function initPicker(root, state, onChange) {
           `<label data-search="${(c.title + ' ' + c.id).toLowerCase()}">`
         + `<input type="checkbox" value="${c.id}">`
         + `<span>${c.title}</span>`
-        + (c.note ? `<span class="note" title="${c.note}">ⓘ</span>` : '')
+        + (c.note ? `<span class="note" title="${c.note}">`
+          + '<span class="icon i-circle-info" aria-hidden="true"></span></span>' : '')
         + '</label>').join('')).join('');
   }).join('');
 

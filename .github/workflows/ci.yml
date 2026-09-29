@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Node 24, а не 22: таблицы кодировок строит TextDecoder движка, и у Node 22
+      # они расходятся с браузерными (tools/check.mjs объясняет, где именно).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Модель, шрифты, значки и внешние адреса
+        run: npm run check
