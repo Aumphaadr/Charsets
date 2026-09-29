@@ -187,7 +187,7 @@ el('undo').addEventListener('click', () => {
 });
 
 document.querySelector('.presets').addEventListener('click', e => {
-  const p = e.target.dataset.preset;
+  const p = e.target.closest('[data-preset]')?.dataset.preset;
   if (!p) return;
   const [a, b] = p.split('|');
   encSel.value = a; decSel.value = b;

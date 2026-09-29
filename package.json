@@ -1,0 +1,25 @@
+{
+  "name": "charsets",
+  "private": true,
+  "type": "module",
+  "description": "Кодировки символов: таблицы, сравнение и перекодировщик — статический сайт без сборки",
+  "license": "MIT",
+  "author": "Nathaniel Larsson",
+  "homepage": "https://aumphaadr.github.io/Charsets/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aumphaadr/Charsets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aumphaadr/Charsets/issues"
+  },
+  "engines": {
+    "node": ">=24.13.1"
+  },
+  "scripts": {
+    "check": "node tools/check.mjs && node tools/local-only.mjs",
+    "serve": "python3 -m http.server 8080",
+    "icons:sync": "node tools/sync-icons.mjs",
+    "fonts:set": "node tools/font-set.mjs"
+  }
+}

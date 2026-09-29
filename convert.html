@@ -13,17 +13,17 @@
 <div class="app">
 
   <header class="topbar">
-    <button class="burger" type="button" aria-label="Меню">☰</button>
+    <button class="burger" type="button" aria-label="Меню"><span class="icon i-menu" aria-hidden="true"></span></button>
     <h1 class="pagetitle">Перекодировщик</h1>
 
     <span class="spacer"></span>
 
     <div class="presets">
       <span class="lbl">Классические пары:</span>
-      <button type="button" data-preset="utf-8|windows-1251">UTF-8 → Windows-1251</button>
-      <button type="button" data-preset="windows-1251|windows-1252">1251 → 1252</button>
-      <button type="button" data-preset="cp866|windows-1251">CP866 → 1251</button>
-      <button type="button" data-preset="koi8-r|windows-1251">KOI8-R → 1251</button>
+      <button type="button" data-preset="utf-8|windows-1251" aria-label="Записать как UTF-8, прочитать как Windows-1251">UTF-8 <span class="icon i-arrow-right" aria-hidden="true"></span> Windows-1251</button>
+      <button type="button" data-preset="windows-1251|windows-1252" aria-label="Записать как Windows-1251, прочитать как Windows-1252">1251 <span class="icon i-arrow-right" aria-hidden="true"></span> 1252</button>
+      <button type="button" data-preset="cp866|windows-1251" aria-label="Записать как CP866, прочитать как Windows-1251">CP866 <span class="icon i-arrow-right" aria-hidden="true"></span> 1251</button>
+      <button type="button" data-preset="koi8-r|windows-1251" aria-label="Записать как KOI8-R, прочитать как Windows-1251">KOI8-R <span class="icon i-arrow-right" aria-hidden="true"></span> 1251</button>
     </div>
   </header>
 
@@ -36,7 +36,7 @@
           <div class="turns">
             <button type="button" id="clear"
               title="Очистить поле. Действие отменяется как обычная правка — Ctrl+Z вернёт текст.">
-              ✕ Очистить</button>
+              <span class="icon i-x" aria-hidden="true"></span> Очистить</button>
           </div>
         </div>
         <textarea id="src" spellcheck="false" rows="4">Привет, мир!</textarea>
@@ -64,10 +64,10 @@
           <div class="turns">
             <button type="button" id="flip"
               title="Записать и прочитать меняются местами, текст остаётся прежним. Обычно выходит набор недопустимых последовательностей — но иногда именно это и нужно проверить.">
-              ⇅ Поменять кодировки</button>
+              <span class="icon i-arrow-up-down" aria-hidden="true"></span> Поменять кодировки</button>
             <button type="button" id="undo"
               title="Результат становится исходным текстом, а кодировки меняются местами. Так испорченный текст восстанавливается: кракозябры превращаются обратно в оригинал.">
-              ↺ Прогнать обратно</button>
+              <span class="icon i-rotate-ccw" aria-hidden="true"></span> Прогнать обратно</button>
           </div>
 
           <span class="meta" id="bytes-meta"></span>
